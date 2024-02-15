@@ -1,0 +1,30 @@
+version: '3.9'
+services:
+  backend:
+    build: ./muscle-backend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./muscle-backend:/usr/src/app
+    depends_on:
+      - db
+  frontend:
+    build: ./muscle-frontend
+    ports:
+      - 8000:8000
+    volumes:
+      - ./muscle-frontend:/app
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=muscle_db
+    volumes:
+      - postgres:/var/lib/postgres/data
+    ports:
+      - 5432:5432
+
+volumes:
+  postgres:
